@@ -3,7 +3,6 @@ package com.example.listycitylab3;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -11,9 +10,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 
-public class MainActivity extends AppCompatActivity implements AddCityFragment.AddCityDialogListner {
+public class MainActivity extends AppCompatActivity implements AddOrEditCityFragment.AddOrEditCityDialogListner {
 
     private ArrayList<City> dataList;
     private ListView cityList;
@@ -40,17 +38,24 @@ public class MainActivity extends AppCompatActivity implements AddCityFragment.A
 
         FloatingActionButton fab = findViewById(R.id.button_add_city);
         fab.setOnClickListener(v -> {
-            AddCityFragment.newInstance(new City())
+            AddOrEditCityFragment.newInstance(new City())
                     .show(getSupportFragmentManager(), "Add City");
         });
 
 
+        /*
+         * Creates an onItemClickListner for the cityList. When a city is pressed,
+         * it shows brings up a window to edit the City.
+         */
         cityList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                // Fetches the selected city from the city adapter
                 City city = cityAdapter.getItem(i);
-                AddCityFragment.newInstance(city)
-                        .show(getSupportFragmentManager(), "Add City");
+
+                // Creates an instance of the AddOrEditCityFragment, with the current city
+                AddOrEditCityFragment.newInstance(city)
+                        .show(getSupportFragmentManager(), "Edit City");
             }
         });
 
@@ -58,8 +63,16 @@ public class MainActivity extends AppCompatActivity implements AddCityFragment.A
 
 
     @Override
-    public void addCity(City city) {
-        cityAdapter.add(city);
+    public void addOrEditCity(City city) {
+
+        // If the city is already in the list, then we are editing,
+        // and do not need to add to the list
+        if (!dataList.contains(city)) {
+            cityAdapter.add(city);
+        }
+
+        // Tells the city adapter that the underlying data has changed, so
+        // it needs to refresh
         cityAdapter.notifyDataSetChanged();
     }
 }

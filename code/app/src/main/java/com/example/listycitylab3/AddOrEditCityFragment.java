@@ -4,7 +4,6 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
@@ -13,29 +12,29 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
 
-public class AddCityFragment extends DialogFragment {
+public class AddOrEditCityFragment extends DialogFragment {
 
-    interface AddCityDialogListner{
-        void addCity(City city);
+    interface AddOrEditCityDialogListner {
+        void addOrEditCity(City city);
     }
 
-    static AddCityFragment newInstance(City city) {
+    static AddOrEditCityFragment newInstance(City city) {
         Bundle args = new Bundle();
         args.putSerializable("city", city);
 
-        AddCityFragment fragment = new AddCityFragment();
+        AddOrEditCityFragment fragment = new AddOrEditCityFragment();
         fragment.setArguments(args);
         return fragment;
     }
 
-    private AddCityDialogListner listner;
+    private AddOrEditCityDialogListner listner;
 
     @Override
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
 
-        if (context instanceof AddCityDialogListner) {
-            listner = (AddCityDialogListner) context;
+        if (context instanceof AddOrEditCityDialogListner) {
+            listner = (AddOrEditCityDialogListner) context;
         } else {
             throw new RuntimeException(context + "must implement AddCityDialogListner");
         }
@@ -63,7 +62,7 @@ public class AddCityFragment extends DialogFragment {
                     city.setName(cityName);
                     city.setProvince(provinceName);
 
-                    listner.addCity(city);
+                    listner.addOrEditCity(city);
                 })
                 .create();
     }
