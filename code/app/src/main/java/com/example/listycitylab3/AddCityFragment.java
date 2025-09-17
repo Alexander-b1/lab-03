@@ -63,9 +63,6 @@ public class AddCityFragment extends DialogFragment {
                     city.setName(cityName);
                     city.setProvince(provinceName);
 
-                    Log.d("cityName", cityName);
-                    Log.d("provinceName", provinceName);
-
                     listner.addCity(city);
                 })
                 .create();
