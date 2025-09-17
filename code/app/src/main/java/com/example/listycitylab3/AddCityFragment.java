@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
@@ -16,6 +17,15 @@ public class AddCityFragment extends DialogFragment {
 
     interface AddCityDialogListner{
         void addCity(City city);
+    }
+
+    static AddCityFragment newInstance(City city) {
+        Bundle args = new Bundle();
+        args.putSerializable("city", city);
+
+        AddCityFragment fragment = new AddCityFragment();
+        fragment.setArguments(args);
+        return fragment;
     }
 
     private AddCityDialogListner listner;
@@ -36,18 +46,27 @@ public class AddCityFragment extends DialogFragment {
     public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
         View view = LayoutInflater.from(getContext()).inflate(R.layout.fragment_add_city, null);
         EditText editCityText = view.findViewById(R.id.edit_text_city_text);
-        EditText editProvinceText = view.findViewById(R.id.edit_text_city_text);
+        EditText editProvinceText = view.findViewById(R.id.edit_text_province_text);
 
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
 
         return builder
                 .setView(view)
-                .setTitle("Add a City")
+                .setTitle("Edit/Add a City")
                 .setNegativeButton("Cancel", null)
-                .setPositiveButton("Add", (dialog,witch) -> {
+                .setPositiveButton("Ok", (dialog,witch) -> {
                     String cityName = editCityText.getText().toString();
                     String provinceName = editProvinceText.getText().toString();
-                    listner.addCity(new City(cityName, provinceName));
+
+                    City city = (City) this.getArguments().get("city");
+
+                    city.setName(cityName);
+                    city.setProvince(provinceName);
+
+                    Log.d("cityName", cityName);
+                    Log.d("provinceName", provinceName);
+
+                    listner.addCity(city);
                 })
                 .create();
     }
