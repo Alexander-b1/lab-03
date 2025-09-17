@@ -2,11 +2,14 @@
 
 ## References and Resources
 
-List any resources used here, or simply put `N/A` if not applicable.
+https://developer.android.com/guide/fragments/communicate#java
+
+https://developer.android.com/reference/android/widget/AdapterView.OnItemClickListener
+
+https://developer.android.com/reference/android/widget/ArrayAdapter
+
+https://stackoverflow.com/questions/18405299/onitemclicklistener-using-arrayadapter-for-listview
 
 ## Verbal Collaboration
 
-| Student Name | CCID      |
-| ------------ | --------- |
-| `student`    | `student` |
-| `<Add more>` | `<CCID>`  |
+`N/A`
