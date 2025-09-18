@@ -44,8 +44,17 @@ public class MainActivity extends AppCompatActivity implements AddOrEditCityFrag
 
 
         /*
-         * Creates an onItemClickListner for the cityList. When a city is pressed,
+         * Creates an onItemClickListener for the cityList. When a city is pressed,
          * it shows brings up a window to edit the City.
+         *
+         * The following code is based off the following stack overflow answer:
+         * Author:  Ahmed Zafar https://stackoverflow.com/questions/18405299/onitemclicklistener-using-arrayadapter-for-listview
+         * Title:   "OnItemClickListener using ArrayAdapter for ListView"
+         * Answer:  https://stackoverflow.com/a/18405437
+         * Date:    August 23, 2013
+         *
+         * Additionally, the docs for ArrayAdapter were used to discover the ".getItem(int position)" function
+         * https://developer.android.com/reference/android/widget/ArrayAdapter
          */
         cityList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -60,7 +69,6 @@ public class MainActivity extends AppCompatActivity implements AddOrEditCityFrag
         });
 
     }
-
 
     @Override
     public void addOrEditCity(City city) {
